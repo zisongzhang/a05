@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <cstdlib>
+using namespace std;
+
+int get_days(){
+  int x;
+  cout<<"Enter the number of days on your trip: ";
+  cin>>x;
+  return x;
+}
+
+double taxi(int days){
+  double total=0, temp;
+  for(int i=1;i<(days+1);i++){
+    cout<<"Day "<<i<<" taxi fee: ";
+    cin>>temp;
+    total+=temp;
+  }
+  return total;
+}
+
+double get_parking(int days, double &reim){
+  double parking=0, temp;
+  for(int i=1;i<(days+1);i++){
+    cout<<"Enter parking fee for day "<<i<< ", in cent: ";
+    cin>>temp;
+    parking+=temp;
+  }
+  if((6*days)<parking){
+    reim=parking;
+  }
+  else{
+    reim=(6*days);
+  }
+  return parking;
+}
+
+double car_b(int days, double rent, double gas, double &reim){
+  double miles, parking, total;
+  cout<<"Enter the total miles driven, in miles: ";
+  cin>>miles;
+  parking=get_parking(days, reim);
+  total=(rent*days+gas*miles)+parking;
+  reim=total-parking;
+  return total;
+}
+
+double car(int days, double &reim){
+  double choice, rent, gas, total;
+  cout<<"1. Sedan \n2. SUV \n3. Van \n4. Convertible\nYour choice: ";
+  cin>>choice;
+  if(choice==1){
+    total=car_b(days, 20, 0.24, reim);
+  }
+  else if(choice==2){
+    total=car_b(days, 25, 0.27, reim);
+  }
+  else if(choice==3){
+    total=car_b(days, 30, 0.32, reim);
+  }
+  else if(choice==4){
+    total=car_b(days, 50, 0.45, reim);
+  }
+  return total;
+}
+
+void taxi_reim(double total, int days, double &reim){
+  if(total<(days*10)){
+    reim=total;
+  }
+  else{
+    reim=(days*10);
+  }
+}
+
+double get_veh_fee(int days, double &reim){
+  double choice, total;
+  cout<<"1-taxi, 2-rent a car: ";
+  cin>>choice;
+  if(choice==1){
+    total=taxi(days);
+    taxi_reim(total, days, reim);
+  }
+  else if(choice==2){
+    total=car(days, reim);
+  }
+  return total;
+}
+
+double get_hotel_fee(int days, double &reim){
+  double total=0, temp;
+  for(int i=1;i<days;i++){
+    cout<<"Enter hotel fee for day "<<i<<": ";
+    cin>>temp;
+    total+=temp;
+  }
+  if(total<((days-1)*90)){
+    reim=total;
+  }
+  else{
+    reim=(days-1)*90;
+  }
+  return total;
+}
+
+int main() {
+  double reim=0, temp;
+  int days=get_days();
+  double veh_fee=get_veh_fee(days, reim);
+  temp+=reim;
+  double hotel_fee=get_hotel_fee(days, reim);
+  temp+=reim;
+  reim=temp;
+  cout<<"veh fee: "<<veh_fee<<endl;
+  cout<<"hotel fee: "<<hotel_fee<<endl;
+  cout<<"reimbursement: "<<reim<<endl;
+}
