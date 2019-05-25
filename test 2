@@ -1,0 +1,164 @@
+#include "pch.h"
+#include <iostream>
+using namespace std;
+//double departure_time(int, double,double &deimbursed,bool);
+bool if_first_breakfast(double);
+bool if_first_lunch(double);
+bool if_first_dinner(double);
+bool if_last_breakfast(double);
+bool if_last_lunch(double);
+bool if_last_dinner(double);
+void first_output_lunch(double);
+void last_output_lunch(double,int);
+double output_lunch(double, int);
+
+int main()
+{
+	int days = 3;
+	double total;
+	double departure_t = 8.00;
+	double arrival_t = 17.30;
+	double deimbursed=3;
+	first_output_lunch(departure_t);
+	total = output_lunch(deimbursed, days);
+	last_output_lunch(arrival_t,days);
+	cout << total << endl;
+	return 0;
+}
+double output_lunch(double d, int day) {
+	double money = 0;
+	double total1 = 0;
+	for (int i = 0; i < day - 2; i++) {
+		cout << "Day " << i + 2 << "," << endl;
+		cout << "Enter breakfast fee, in $: " ;
+		cin >> money;
+		total1 = money+total1;
+		cout << "Enter lunch fee, in $: ";
+		cin >> money;
+		total1 = money+total1;
+		cout << "Enter dinner fee, in $: ";
+		cin >> money;
+		total1 = money+total1;
+	}
+	return total1;
+}
+void last_output_lunch(double a_t, int day) {
+	bool b = if_first_breakfast(a_t);
+	bool l = if_first_lunch(a_t);
+	bool d = if_first_dinner(a_t);
+	cout << "Day " << day << "," << endl;
+	
+	if (b == 1) {
+		cout << "Enter breakfast fee, in $: " << endl;
+	}
+	else {
+		cout << "Your breakfast for day " << day << " is not allowed as an expense" << endl;
+	}
+	if (l == 1) {
+		cout << "Enter lunch fee, in $: " << endl;
+	}
+	else {
+		cout << "Your lunch for day " << day << " is not allowed as an expense" << endl;
+	}
+	if (d == 1) {
+		cout << "Enter dinner fee, in $: " << endl;
+	}
+	else {
+		cout << "Your dinner for day " << day << " is not allowed as an expense" << endl;
+	}
+}
+void first_output_lunch(double d_t) {
+	bool b = if_first_breakfast(d_t);
+	bool l = if_first_lunch(d_t);
+	bool d = if_first_dinner(d_t);
+	cout << "Day 1," << endl;
+	if (b == 1) {
+		cout << "Enter breakfast fee, in $: " << endl;
+	}
+	else {
+		cout << "Your breakfast for day 1 is not allowed as an expense" << endl;
+	}
+	if (l == 1) {
+		cout << "Enter lunch fee, in $: " << endl;
+	}
+	else{
+		cout << "Your lunch for day 1 is not allowed as an expense" << endl;
+	}
+	if (d == 1) {
+		cout << "Enter dinner fee, in $: " << endl;
+	}
+	else {
+		cout << "Your dinner for day 1 is not allowed as an expense" << endl;
+	}	
+}
+bool if_first_breakfast(double d) {
+	bool b;							//if b = 1,  reimburised,if b = 0, not reimburised 
+	if (d <= 7) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+bool if_first_lunch(double d) {
+	bool b;
+	if (d <= 12) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+bool if_first_dinner(double d) {
+	bool b;
+	if (d <= 18) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+bool if_last_breakfast(double d) {
+	bool b;							//if b = 1, reimbursed, if b = 0, not reimbursed.
+	if (d >= 8) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+bool if_last_lunch(double d) {
+	bool b;
+	if (d >= 13) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+bool if_last_dinner(double d) {
+	bool b;
+	if (d >= 19) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+	return b;
+}
+/*
+double departure_time(int day, double d_t, double &d, bool if_d) {
+	for (int i = 0; i < day; i++) {
+		if (i = 0) {
+			if (d_t < 7) {
+
+			}
+		}
+	}
+}
+*/
